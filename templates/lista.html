@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<section class="hero">
+    <div class="container">
+        <p class="hero-sub">Colecionáveis • Hipercarros • Lendas</p>
+        <h1>Encontre a sua <em>obra de arte</em> sobre rodas</h1>
+
+        <form method="get" class="busca">
+            <input type="text" name="q" value="{{ q }}" placeholder="Buscar marca ou modelo...">
+            <select name="marca">
+                <option value="">Todas as marcas</option>
+                {% for m in marcas %}
+                    <option value="{{ m }}" {% if m == marca_sel %}selected{% endif %}>{{ m }}</option>
+                {% endfor %}
+            </select>
+            <select name="ordem">
+                <option value="">Destaques</option>
+                <option value="preco_asc" {% if ordem_sel == 'preco_asc' %}selected{% endif %}>Menor preço</option>
+                <option value="preco_desc" {% if ordem_sel == 'preco_desc' %}selected{% endif %}>Maior preço</option>
+                <option value="potencia" {% if ordem_sel == 'potencia' %}selected{% endif %}>Mais potente</option>
+                <option value="velocidade" {% if ordem_sel == 'velocidade' %}selected{% endif %}>Mais rápido</option>
+            </select>
+            <button type="submit" class="btn btn-vermelho">Buscar</button>
+        </form>
+    </div>
+</section>
+
+<section class="container secao">
+    <p class="contagem">{{ carros|length }} anúncio{{ carros|length|pluralize }} encontrado{{ carros|length|pluralize }}</p>
+
+    <div class="grade">
+        {% for carro in carros %}
+        <a href="{% url 'detalhe' carro.pk %}" class="card">
+            <div class="card-img">
+                {% if carro.imagem %}
+                    <img src="{{ carro.imagem.url }}" alt="{{ carro.marca }} {{ carro.modelo }}">
+                {% else %}
+                    <div class="placeholder">{{ carro.marca|slice:":1" }}</div>
+                {% endif %}
+                {% if carro.destaque %}<span class="selo">Destaque</span>{% endif %}
+                {% if not user.is_authenticated %}<span class="cadeado" title="Login necessário">🔒</span>{% endif %}
+            </div>
+            <div class="card-corpo">
+                <p class="card-marca">{{ carro.marca }}</p>
+                <h3>{{ carro.modelo }}</h3>
+                <p class="card-info">{{ carro.ano }} • {{ carro.km|floatformat:"0g" }} km • {{ carro.cidade }}</p>
+                <p class="card-info">{{ carro.potencia_cv }} cv • {{ carro.cambio }}</p>
+                <p class="card-preco">R$ {{ carro.preco|floatformat:"0g" }}</p>
+            </div>
+        </a>
+        {% empty %}
+            <p class="vazio">Nenhum carro encontrado. Cadastre alguns pelo painel /admin ou rode o comando de popular (Passo 11).</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

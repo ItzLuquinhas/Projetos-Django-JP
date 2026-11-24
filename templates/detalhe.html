@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block titulo %}{{ carro.marca }} {{ carro.modelo }} | Apex Garage{% endblock %}
+
+{% block conteudo %}
+<section class="container secao">
+    <a href="{% url 'lista' %}" class="voltar">← Voltar aos anúncios</a>
+
+    <div class="detalhe">
+        <div class="detalhe-img">
+            {% if carro.imagem %}
+                <img src="{{ carro.imagem.url }}" alt="{{ carro.marca }} {{ carro.modelo }}">
+            {% else %}
+                <div class="placeholder grande">{{ carro.marca|slice:":1" }}</div>
+            {% endif %}
+        </div>
+
+        <div class="detalhe-info">
+            <p class="card-marca">{{ carro.marca }}</p>
+            <h1>{{ carro.modelo }}</h1>
+            <p class="card-info">{{ carro.ano }} • {{ carro.cor }} • {{ carro.cidade }}</p>
+            <p class="detalhe-preco">R$ {{ carro.preco|floatformat:"0g" }}</p>
+
+            <div class="specs">
+                <div><span>Potência</span><strong>{{ carro.potencia_cv }} cv</strong></div>
+                <div><span>Vel. máxima</span><strong>{{ carro.velocidade_max }} km/h</strong></div>
+                <div><span>0 a 100 km/h</span><strong>{% if carro.zero_a_cem %}{{ carro.zero_a_cem }} s{% else %}—{% endif %}</strong></div>
+                <div><span>Câmbio</span><strong>{{ carro.cambio }}</strong></div>
+                <div><span>Quilometragem</span><strong>{{ carro.km|floatformat:"0g" }} km</strong></div>
+                <div><span>Ano</span><strong>{{ carro.ano }}</strong></div>
+            </div>
+
+            {% if carro.descricao %}
+                <h3 class="sub">Sobre este carro</h3>
+                <p class="descricao">{{ carro.descricao|linebreaksbr }}</p>
+            {% endif %}
+
+            <a href="#" class="btn btn-vermelho grande-btn">Falar com o vendedor</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

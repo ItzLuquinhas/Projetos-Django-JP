@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Criar conta | Apex Garage{% endblock %}
+
+{% block conteudo %}
+<section class="container secao">
+    <div class="caixa-form">
+        <h1>Criar conta</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_div }}
+            <button type="submit" class="btn btn-vermelho largo">Cadastrar</button>
+        </form>
+
+        <p class="rodape-form">Já tem conta? <a href="{% url 'login' %}">Entrar</a></p>
+    </div>
+</section>
+{% endblock %}

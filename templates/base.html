@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Apex Garage{% endblock %}</title>
+    <script>
+        (function () {
+            var t = localStorage.getItem('tema');
+            if (!t) {
+                t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            }
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="topo">
+        <div class="container topo-inner">
+            <a href="{% url 'lista' %}" class="logo">APEX<span>GARAGE</span></a>
+            <nav class="menu">
+                <button id="btn-tema" class="btn-tema" type="button" aria-label="Alternar tema">◐</button>
+                {% if user.is_authenticated %}
+                    <span class="saudacao">Olá, {{ user.username }}</span>
+                    <form method="post" action="{% url 'logout' %}" class="form-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-contorno">Sair</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-contorno">Entrar</a>
+                    <a href="{% url 'cadastro' %}" class="btn btn-vermelho">Criar conta</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block conteudo %}{% endblock %}
+    </main>
+
+    <footer class="rodape">
+        <div class="container">
+            <p>© Apex Garage. Projeto de estudo. Nenhum Uno com escada foi ferido na criação deste site.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('btn-tema').addEventListener('click', function () {
+            var atual = document.documentElement.getAttribute('data-theme');
+            var novo = atual === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', novo);
+            localStorage.setItem('tema', novo);
+        });
+    </script>
+</body>
+</html>
