@@ -315,3 +315,65 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
     .saudacao { display: none; }
     .topo-inner { flex-wrap: wrap; gap: 10px; }
 }
+
+/* ============ ANÚNCIOS: FORMULÁRIO E AÇÕES ============ */
+.caixa-form.larga { max-width: 760px; }
+
+.form-grade {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 18px;
+}
+.form-grade > div:has(textarea),
+.form-grade > div:has(input[type="file"]),
+.form-grade > .linha-inteira { grid-column: 1 / -1; }
+
+.caixa-form input[type="number"],
+.caixa-form input[type="file"],
+.caixa-form select,
+.caixa-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--bg-2);
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    color: var(--texto);
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+.caixa-form textarea { resize: vertical; }
+.caixa-form select:focus,
+.caixa-form textarea:focus,
+.caixa-form input[type="number"]:focus { outline: none; border-color: var(--vermelho); }
+.caixa-form input[type="file"]::file-selector-button {
+    background: var(--vermelho);
+    color: #fff;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 4px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+.caixa-form a { color: var(--vermelho); }
+
+.acoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+.card .acoes { margin-top: 14px; }
+.acoes .btn { padding: 8px 16px; }
+
+.btn-perigo { background: transparent; color: #ff5a5f; border-color: #ff5a5f; }
+.btn-perigo:hover { background: #ff5a5f; color: #fff; }
+.largo.btn-perigo { background: #d93a3f; color: #fff; border-color: #d93a3f; }
+.largo.btn-perigo:hover { background: #ff5a5f; }
+
+.cabecalho-secao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+@media (max-width: 800px) {
+    .form-grade { grid-template-columns: 1fr; }
+}

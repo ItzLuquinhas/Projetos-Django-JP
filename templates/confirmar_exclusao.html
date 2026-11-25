@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Excluir anúncio | Apex Garage{% endblock %}
+
+{% block conteudo %}
+<section class="container secao">
+    <div class="caixa-form">
+        <h1>Excluir anúncio</h1>
+        <p class="aviso">Tem certeza que deseja excluir <strong>{{ carro.marca }} {{ carro.modelo }}</strong>? Essa ação não pode ser desfeita.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-perigo largo">Sim, excluir</button>
+        </form>
+        <p class="rodape-form"><a href="{% url 'detalhe' carro.pk %}">Cancelar</a></p>
+    </div>
+</section>
+{% endblock %}

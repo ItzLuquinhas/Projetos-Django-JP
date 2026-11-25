@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Meus anúncios | Apex Garage{% endblock %}
+
+{% block conteudo %}
+<section class="container secao">
+    <div class="cabecalho-secao">
+        <h1>Meus anúncios</h1>
+        <a href="{% url 'criar' %}" class="btn btn-vermelho">+ Novo anúncio</a>
+    </div>
+
+    <div class="grade">
+        {% for carro in carros %}
+        <div class="card">
+            <a href="{% url 'detalhe' carro.pk %}">
+                <div class="card-img">
+                    {% if carro.imagem %}
+                        <img src="{{ carro.imagem.url }}" alt="{{ carro.marca }} {{ carro.modelo }}">
+                    {% else %}
+                        <div class="placeholder">{{ carro.marca|slice:":1" }}</div>
+                    {% endif %}
+                </div>
+            </a>
+            <div class="card-corpo">
+                <p class="card-marca">{{ carro.marca }}</p>
+                <h3>{{ carro.modelo }}</h3>
+                <p class="card-preco">R$ {{ carro.preco|floatformat:"0g" }}</p>
+                <div class="acoes">
+                    <a href="{% url 'editar' carro.pk %}" class="btn btn-contorno">Editar</a>
+                    <a href="{% url 'excluir' carro.pk %}" class="btn btn-perigo">Excluir</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <p class="vazio">Você ainda não anunciou nenhum carro. <a href="{% url 'criar' %}" style="color: var(--vermelho);">Anuncie agora!</a></p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

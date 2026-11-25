@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block titulo %}{{ titulo }} | Apex Garage{% endblock %}
+
+{% block conteudo %}
+<section class="container secao">
+    <div class="caixa-form larga">
+        <h1>{{ titulo }}</h1>
+
+        <form method="post" enctype="multipart/form-data" class="form-grade">
+            {% csrf_token %}
+            {{ form.as_div }}
+            <div class="linha-inteira">
+                <button type="submit" class="btn btn-vermelho largo">Salvar anúncio</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

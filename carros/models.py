@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+from django.db import models
 
 class Carro(models.Model):
     CAMBIOS = [
@@ -23,6 +25,13 @@ class Carro(models.Model):
     descricao = models.TextField(blank=True)
     imagem = models.ImageField(upload_to='carros/', blank=True, null=True)
     destaque = models.BooleanField(default=False)
+    dono = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='anuncios',
+    )
     criado_em = models.DateTimeField(auto_now_add=True)
 
     class Meta:

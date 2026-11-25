@@ -35,6 +35,12 @@
                 <p class="descricao">{{ carro.descricao|linebreaksbr }}</p>
             {% endif %}
 
+            {% if user == carro.dono or user.is_staff %}
+                <div class="acoes">
+                    <a href="{% url 'editar' carro.pk %}" class="btn btn-contorno">✏️ Editar anúncio</a>
+                    <a href="{% url 'excluir' carro.pk %}" class="btn btn-perigo">🗑 Excluir</a>
+                </div>
+            {% endif %}
             <a href="#" class="btn btn-vermelho grande-btn">Falar com o vendedor</a>
         </div>
     </div>
